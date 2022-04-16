@@ -1,0 +1,52 @@
+mega = True
+a, b = map(int, input().split())
+if a == b:
+    print(0)
+else:
+    from math import inf
+    lis = [inf] * 100001
+    lis[a] = 0
+    
+	  status = True
+    now = [a]
+    time = 0
+    while status:
+        next = []
+        tem = []
+        for temp in now:
+
+            for num in range(1,17):
+                temp *= 2
+                if temp <= 100000:
+                    if temp == b:
+                        if mega:
+                            print(time)
+                        status = False
+                        mega = False
+                        break
+                    lis[temp] = time
+                    tem.append(temp)
+        time += 1
+        now += tem
+        for num in now:
+
+            for x in range(-1,3,2):
+                if 0 <= num + x <= 100000:
+                    if (num + x) == b:
+                        status = False
+                        break
+                    elif lis[num + x] == inf:
+                        next.append(num + x)
+                    lis[num + x] = time
+
+            if num <= 50000 and lis[2 * num] == inf:
+                if (2 * num) == b:
+                    status = False
+                    break
+                lis[2 * num] = time
+                next.append(2 * num)
+        now = next
+
+    if mega:
+        print(time)
+
