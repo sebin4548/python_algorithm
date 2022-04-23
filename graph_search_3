@@ -1,0 +1,31 @@
+import sys
+from collections import deque
+
+rline = sys.stdin.readline
+
+n = int(rline().rstrip())
+m = int(rline().rstrip())
+
+adj = {}
+for _ in range(m):
+		x, y = map(int, rline().rstrip().split())
+		if x not in adj:
+				adj[x] = [y]
+		elif x in adj:
+				adj[x].append(y) 
+		if y not in adj:
+				adj[y] = [x]
+		elif y in adj:
+				adj[y].append(x) 
+				
+queue = deque(ad for ad in adj[1])
+all = [1] + [ad for ad in adj[1]]
+
+while queue:
+		k = queue.popleft()
+		for al in adj[k]:
+				if al not in all:
+						queue.append(al)
+						all.append(al)
+
+print(len(all) - 1)
